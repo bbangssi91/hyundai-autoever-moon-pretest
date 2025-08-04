@@ -1,0 +1,75 @@
+services:
+  user-admin-app:                               # 서비스명
+    container_name: user-admin-app              # 컨테이너명
+    image: user-admin-app-image                 # 이미지명
+    ports:                                      # Host Port : Container Port
+      - "80:80"
+    build: 
+      context: ./UserAdminApplication
+      dockerfile: Dockerfile                    # Dockerfile 기반으로 빌드한 이미지를 사용함 (compose 파일 기준의 경로)
+    depends_on:                                 # Application 구동순서 체크
+      user-admin-database:
+        condition: service_healthy
+      redis-server:
+        condition: service_healthy
+
+  message-consumer-app:
+    container_name: message-consumer-app
+    image: user-admin-app-image
+    ports:                                      
+      - "80:80"
+    build: 
+      context: ./MessageConsumerApp
+      dockerfile: Dockerfile
+    depends_on:
+      user-admin-database:
+        condition: service_healthy
+      redis-server:
+        condition: service_healthy    
+
+
+  user-admin-database:
+    container_name: mysql-server
+    image: mysql
+    environment:
+      MYSQL_DATABASE: useradmindb
+      MYSQL_ROOT_PASSWORD: moon
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping"]
+      interval: 5s
+      retries: 10
+
+  redis-server:
+    container_name: redis-server
+    image: redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--requirepass", "moon"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+  
+  ## 카카오톡 메시지 모킹앱
+  kakao-message-mocking-app:
+    container_name: kakao-message-mocking-app
+    image: kakao-message-mocking-app-image
+    build:
+      context: ./KakaoMessageMockingApp
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"    
+
+  ## sms 메시지 모킹앱
+  sms-message-mocking-app:
+    container_name: sms-message-mocking-app
+    image: sms-message-mocking-app-image
+    build:
+      context: ./SmsMessageMockingApp
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8080"
