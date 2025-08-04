@@ -1,0 +1,12 @@
+[submodule "UserAdminApplication"]
+	path = UserAdminApplication
+	url = https://github.com/bbangssi91/UserAdminApplication.git
+[submodule "MessageConsumerApp"]
+	path = MessageConsumerApp
+	url = https://github.com/bbangssi91/MessageConsumerApp.git
+[submodule "SmsMessageMockingApp"]
+	path = SmsMessageMockingApp
+	url = https://github.com/bbangssi91/SmsMessageMockingApp.git
+[submodule "KakaoMessageMockingApp"]
+	path = KakaoMessageMockingApp
+	url = https://github.com/bbangssi91/KakaoMessageMockingApp.git
