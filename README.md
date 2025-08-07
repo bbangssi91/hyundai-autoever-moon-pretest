@@ -7,6 +7,8 @@
 ```
 $ git clone --recursive https://github.com/bbangssi91/hyundai-autoever-moon-pretest.git
 
+$ cd hyundai-autoever-moon-pretest
+
 $ git submodule foreach git pull origin main 
 
 $ mvn clean package
