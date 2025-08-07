@@ -14,6 +14,17 @@ $ mvn clean package
 $ docker compose up -d
 ```
 
+## 🖥️ 사용 기술 스택
+
+- __Language__ : `Java17`
+- __Framework__ : `SpringBoot`, `Spring Security`, `Spring JPA`
+- __Build__ : `Maven`
+- __Database__ : `MySQL`
+- __Messaging Queue__ : `Redis`
+- __Authentication__ : `Basic Auth`, `JWT`
+- __RateLimiter__ : `Resilience4j`
+- __Infrastructure__ : `Docker`
+
 ## 🏛️ Project 구조
 
 ```
